@@ -9,6 +9,7 @@ import sys
 from colorama import init, Fore, Style
 
 VERBOSE = False
+FORCE = False
 
 
 def main():
@@ -44,8 +45,10 @@ def main():
         print(Style.RESET_ALL)
 
     if currentdb_ver is not None:
-        if vcmp(str(currentdb_ver), str(latest_ver)) is False:
-            print("Last inserted version in db is already newest ts3 server version")
+        if vcmp(str(currentdb_ver), str(latest_ver)) is False and FORCE is False:
+            print("Last inserted version in db is already newest ts3 server version.\n"
+                  "You can use the -f option to force update.\n"
+                  "For more information call the script with -h.")
             exit(0)
         else:
             if VERBOSE:
@@ -54,7 +57,7 @@ def main():
     print("Shutting down teamspeak")
     os.system("../teamspeak3-server_linux_amd64/ts3server_startscript.sh stop")
 
-    print("Updating Teamspeak")
+    print("\nUpdating Teamspeak")
 
     URL_TAR = URL + latest_ver + "/teamspeak3-server_linux_amd64-" + latest_ver + ".tar.bz2"
 
@@ -154,7 +157,7 @@ def insert_new_version(conn, oldver, newver):
             print("No old_version was found in the database so inserting: " + Fore.CYAN + " NULL " + Style.RESET_ALL)
         sql = '''INSERT INTO versions(old_version,new_version)VALUES(NULL,'{}')'''.format(newver)
     if VERBOSE:
-        print("\nSQL Query: " + Fore.YELLOW + " " + sql + Style.RESET_ALL)
+        print("SQL Query: " + Fore.YELLOW + " " + sql + Style.RESET_ALL)
         print("\nFinished inserting")
     cur = conn.cursor()
     cur.execute(sql)
@@ -166,13 +169,16 @@ if __name__ == '__main__':
     for i in range(len(sys.argv)):
         if sys.argv[i] == "-h" or sys.argv[i] == "--help":
             print(Fore.CYAN + "A Python 3 script used for updating a Teamspeak3 Server\n\n" + Style.RESET_ALL +
-                  "usage: python3 main.py -h | -v\n"
+                  "usage: python3 main.py -h | -v | -f\n"
                   "Options:\n"
                   "  -h, --help                              Displays this message\n"
-                  "  -v, --verbose                           Prints verbose output\n")
+                  "  -v, --verbose                           Prints verbose output\n"
+                  "  -f, --force                             Forces an update")
             exit(0)
         if sys.argv[i] == "-v" or sys.argv[i] == "--verbose":
             VERBOSE = True
+        if sys.argv[i] == "-f" or sys.argv[i] == "--force":
+            FORCE = True
 
     print(Fore.GREEN + "########################################################\n"
                        "# flopana's Teamspeak3 Server Updater                  #\n"

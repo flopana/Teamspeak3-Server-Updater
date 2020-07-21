@@ -19,8 +19,9 @@ $ python3 main.py
 
 There are also options available
 ```shell script
-usage: python3 main.py -h | -v
+usage: python3 main.py -h | -v | -f
 Options:
   -h, --help                              Displays this message
   -v, --verbose                           Prints verbose output
+  -f, --force                             Forces an update
 ```
