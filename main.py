@@ -7,6 +7,7 @@ import tarfile
 import os
 import sys
 from colorama import init, Fore, Style
+import subprocess
 
 VERBOSE = False
 FORCE = False
@@ -25,8 +26,8 @@ def main():
         if VERBOSE:
             print("Detecting architecture:")
 
-        tmp = str(os.popen('uname -m').read())
-        if tmp == "x86_64":
+        result = subprocess.run(['uname', '-m'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        if result == "x86_64":
             ARCHITECTURE = "amd64"
         else:
             ARCHITECTURE = "x86"
