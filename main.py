@@ -10,6 +10,7 @@ from colorama import init, Fore, Style
 
 VERBOSE = False
 FORCE = False
+ARCHITECTURE = None
 
 
 def main():
@@ -17,6 +18,26 @@ def main():
     Main function of the script
     :return:
     """
+
+    global ARCHITECTURE, FORCE, VERBOSE
+
+    if ARCHITECTURE is None:
+        if VERBOSE:
+            print("Detecting architecture:")
+
+        tmp = os.popen('uname -m').read()
+        if tmp == "x86_64":
+            ARCHITECTURE = "amd64"
+        else:
+            ARCHITECTURE = "x86"
+
+        if VERBOSE:
+            print("Architecture detected: " + ARCHITECTURE)
+    elif ARCHITECTURE != "amd64" and ARCHITECTURE != "x86":
+        print(Fore.RED + "Error:\n"
+                         "" + Style.RESET_ALL + "Unsupported architecture please look up the usage.")
+        exit(1)
+
     if VERBOSE:
         print("Creating connection to sqlite")
     conn = create_connection(r"db.sqlite3")
@@ -30,8 +51,8 @@ def main():
             print(Style.RESET_ALL)
     if VERBOSE:
         print("Getting all available versions from teamspeak.com")
-    URL = 'https://files.teamspeak-services.com/releases/server/'
-    page = requests.get(URL)
+    url = 'https://files.teamspeak-services.com/releases/server/'
+    page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     versions = []
     for a in soup.find_all('a', href=True):
@@ -55,11 +76,11 @@ def main():
                 print("Last inserted version in db is older than latest available so updating")
 
     print("Shutting down teamspeak")
-    os.system("../teamspeak3-server_linux_amd64/ts3server_startscript.sh stop")
+    os.system("../teamspeak3-server_linux_" + ARCHITECTURE + "/ts3server_startscript.sh stop")
 
     print("\nUpdating Teamspeak")
 
-    URL_TAR = URL + latest_ver + "/teamspeak3-server_linux_amd64-" + latest_ver + ".tar.bz2"
+    URL_TAR = url + latest_ver + "/teamspeak3-server_linux_" + ARCHITECTURE + "-" + latest_ver + ".tar.bz2"
 
     if VERBOSE:
         print("\nDownloading current version: " + URL_TAR)
@@ -79,7 +100,7 @@ def main():
         print("Finished extracting")
 
     print("\nStarting teamspeak")
-    os.system("../teamspeak3-server_linux_amd64/ts3server_startscript.sh start")
+    os.system("../teamspeak3-server_linux_" + ARCHITECTURE + "/ts3server_startscript.sh start")
 
     insert_new_version(conn, currentdb_ver, latest_ver)
 
@@ -170,15 +191,19 @@ if __name__ == '__main__':
         if sys.argv[i] == "-h" or sys.argv[i] == "--help":
             print(Fore.CYAN + "A Python 3 script used for updating a Teamspeak3 Server\n\n" + Style.RESET_ALL +
                   "usage: python3 main.py -h | -v | -f\n"
+                  "usage: python3 main.py -a [amd64 or x86]\n"
                   "Options:\n"
                   "  -h, --help                              Displays this message\n"
                   "  -v, --verbose                           Prints verbose output\n"
-                  "  -f, --force                             Forces an update")
+                  "  -f, --force                             Forces an update\n"
+                  "  -a, --architecture                      Lets you define the architecure")
             exit(0)
         if sys.argv[i] == "-v" or sys.argv[i] == "--verbose":
             VERBOSE = True
         if sys.argv[i] == "-f" or sys.argv[i] == "--force":
             FORCE = True
+        if sys.argv[i] == "-a" or sys.argv[i] == "--architecture":
+            ARCHITECTURE = sys.argv[i+1]
 
     print(Fore.GREEN + "########################################################\n"
                        "# flopana's Teamspeak3 Server Updater                  #\n"
