@@ -33,10 +33,6 @@ def main():
 
         if VERBOSE:
             print("Architecture detected: " + ARCHITECTURE + "\n")
-    elif ARCHITECTURE != "amd64" and ARCHITECTURE != "x86":
-        print(Fore.RED + "Error:\n"
-                         "" + Style.RESET_ALL + "Unsupported architecture please look up the usage.")
-        exit(1)
 
     if VERBOSE:
         print("Creating connection to sqlite")
@@ -203,10 +199,14 @@ if __name__ == '__main__':
         if sys.argv[i] == "-f" or sys.argv[i] == "--force":
             FORCE = True
         if sys.argv[i] == "-a" or sys.argv[i] == "--architecture":
-            if sys.argv[i+1] == "x86_64":
+            if sys.argv[i+1] == "amd64":
                 ARCHITECTURE = "amd64"
-            else:
+            elif sys.argv[i+1] == "x86":
                 ARCHITECTURE = "x86"
+            else:
+                print(Fore.RED + "Error:\n"
+                                 "" + Style.RESET_ALL + "Unsupported architecture please look up the usage.")
+                exit(1)
 
     print(Fore.GREEN + "########################################################\n"
                        "# flopana's Teamspeak3 Server Updater                  #\n"
