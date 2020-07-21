@@ -33,3 +33,12 @@ Options:
   -v, --verbose                           Prints verbose output
   -f, --force                             Forces an update
 ```
+
+## Advanced Usage:
+Since the script also checks wether or not it should update you can automate it.
+
+Example cronjob:
+```
+# Executes every Monday on 3AM
+0 3 * * 1 cd /path/to/script && python3 main.py >/dev/null 2>&1
+```
