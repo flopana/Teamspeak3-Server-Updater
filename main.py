@@ -54,8 +54,7 @@ def main():
     print("Shutting down teamspeak")
     os.system("../teamspeak3-server_linux_amd64/ts3server_startscript.sh stop")
 
-    if VERBOSE is False:
-        print("Updating Teamspeak")
+    print("Updating Teamspeak")
 
     URL_TAR = URL + latest_ver + "/teamspeak3-server_linux_amd64-" + latest_ver + ".tar.bz2"
 
