@@ -165,9 +165,8 @@ if __name__ == '__main__':
     init()
     print(Fore.GREEN + "##########################################\n"
           "# flopana's Teamspeak3 Server Updater    #\n"
-          "##########################################")
+          "##########################################\n" + Style.RESET_ALL)
 
-    print(Style.RESET_ALL)
     for i in range(len(sys.argv)):
         if sys.argv[i] == "-v":
             VERBOSE = True
