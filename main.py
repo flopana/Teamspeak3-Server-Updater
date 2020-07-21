@@ -17,6 +17,7 @@ def main():
     Main function of the script
     :return:
     """
+    global ARCHITECTURE, FORCE, VERBOSE
     if VERBOSE:
         print("Creating connection to sqlite")
     conn = create_connection(r"db.sqlite3")
