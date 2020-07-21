@@ -163,12 +163,19 @@ def insert_new_version(conn, oldver, newver):
 
 if __name__ == '__main__':
     init()
+    for i in range(len(sys.argv)):
+        if sys.argv[i] == "-h" or sys.argv[i] == "--help":
+            print(Fore.CYAN + "A Python 3 script used for updating a Teamspeak3 Server\n" + Style.RESET_ALL +
+                  "usage: python3 main.py -h | -v\n"
+                  "Options:\n"
+                  "  -h, --help                              Displays this message\n"
+                  "  -v, --verbose                           Prints verbose output\n")
+            exit(0)
+        if sys.argv[i] == "-v" or sys.argv[i] == "--verbose":
+            VERBOSE = True
+
     print(Fore.GREEN + "##########################################\n"
           "# flopana's Teamspeak3 Server Updater    #\n"
           "##########################################\n" + Style.RESET_ALL)
-
-    for i in range(len(sys.argv)):
-        if sys.argv[i] == "-v":
-            VERBOSE = True
 
     main()
