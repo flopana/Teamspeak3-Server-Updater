@@ -203,7 +203,10 @@ if __name__ == '__main__':
         if sys.argv[i] == "-f" or sys.argv[i] == "--force":
             FORCE = True
         if sys.argv[i] == "-a" or sys.argv[i] == "--architecture":
-            ARCHITECTURE = sys.argv[i+1]
+            if sys.argv[i+1] == "x86_64":
+                ARCHITECTURE = "amd64"
+            else:
+                ARCHITECTURE = "x86"
 
     print(Fore.GREEN + "########################################################\n"
                        "# flopana's Teamspeak3 Server Updater                  #\n"
