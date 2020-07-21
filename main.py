@@ -5,6 +5,10 @@ from bs4 import BeautifulSoup
 from version_shit import sort, vcmp
 import tarfile
 import os
+import sys
+from colorama import init, Fore, Style
+
+VERBOSE = False
 
 
 def main():
@@ -12,16 +16,19 @@ def main():
     Main function of the script
     :return:
     """
-    print("Creating connection to sqlite")
+    if VERBOSE:
+        print("Creating connection to sqlite")
     conn = create_connection(r"db.sqlite3")
 
     currentdb_ver = get_last_version(conn)
-    if get_last_version(conn) is None:
-        print("Nothing found in the db so getting the newest version")
-    else:
-        print("Latest inserted version in db is: " + currentdb_ver)
-
-    print("\nGetting all available versions from teamspeak.com")
+    if VERBOSE:
+        if get_last_version(conn) is None:
+            print("Nothing found in the db so getting the newest version")
+        else:
+            print("Latest inserted version in db is: " + Fore.CYAN + currentdb_ver)
+            print(Style.RESET_ALL)
+    if VERBOSE:
+        print("Getting all available versions from teamspeak.com")
     URL = 'https://files.teamspeak-services.com/releases/server/'
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -31,35 +38,50 @@ def main():
     versions = versions[1:len(versions) - 1]  # cut out first and last href
     sort(versions)
     latest_ver = str(versions[len(versions) - 1])
-    print("Latest available version on teamspeak.com is " + latest_ver)
+    if VERBOSE:
+        print("Available versions are: " + Fore.CYAN + str(versions) + Style.RESET_ALL)
+        print("Latest available version on teamspeak.com is: " + Fore.CYAN + latest_ver)
+        print(Style.RESET_ALL)
 
     if currentdb_ver is not None:
         if vcmp(str(currentdb_ver), str(latest_ver)) is False:
             print("Last inserted version in db is already newest ts3 server version")
             exit(0)
         else:
-            print("Last inserted version in db is older than latest available so updating")
+            if VERBOSE:
+                print("Last inserted version in db is older than latest available so updating")
 
-    print("\nShutting down teamspeak")
+    print("Shutting down teamspeak")
     os.system("../teamspeak3-server_linux_amd64/ts3server_startscript.sh stop")
 
+    if VERBOSE is False:
+        print("Updating Teamspeak")
+
     URL_TAR = URL + latest_ver + "/teamspeak3-server_linux_amd64-" + latest_ver + ".tar.bz2"
-    print("\nDownloading current version: " + URL_TAR)
+
+    if VERBOSE:
+        print("\nDownloading current version: " + URL_TAR)
+
     r = requests.get(URL_TAR)
     with open('../ts3.tar.bz2', 'wb') as f:
         f.write(r.content)
-    print("Finished now extracting")
+
+    if VERBOSE:
+        print("Finished download now extracting")
 
     tar = tarfile.open("../ts3.tar.bz2", "r:bz2")
     tar.extractall("../")
     tar.close()
 
-    print("Finished extracting")
+    if VERBOSE:
+        print("Finished extracting")
+
     print("\nStarting teamspeak")
     os.system("../teamspeak3-server_linux_amd64/ts3server_startscript.sh start")
 
     insert_new_version(conn, currentdb_ver, latest_ver)
 
+    print(Fore.GREEN + "\nFinished thank you for using my script!" + Style.RESET_ALL)
 
 def create_connection(db_file):
     """ create a database connection to the SQLite database
@@ -123,11 +145,37 @@ def insert_new_version(conn, oldver, newver):
     :return:
     """
 
+    if VERBOSE:
+        print("\nNow inserting new data into the Database")
+
     sql = '''INSERT INTO versions(old_version,new_version)VALUES('{}','{}')'''.format(oldver, newver)
+    if oldver is None:
+        if VERBOSE:
+            print("No old_version was found in the database so inserting: " + Fore.CYAN + " NULL " + Style.RESET_ALL)
+        sql = '''INSERT INTO versions(old_version,new_version)VALUES(NULL,'{}')'''.format(newver)
+    if VERBOSE:
+        print("\nSQL Query: " + Fore.YELLOW + " " + sql + Style.RESET_ALL)
+        print("\nFinished inserting")
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
 
 
 if __name__ == '__main__':
+    init()
+    for i in range(len(sys.argv)):
+        if sys.argv[i] == "-h" or sys.argv[i] == "--help":
+            print(Fore.CYAN + "A Python 3 script used for updating a Teamspeak3 Server\n" + Style.RESET_ALL +
+                  "usage: python3 main.py -h | -v\n"
+                  "Options:\n"
+                  "  -h, --help                              Displays this message\n"
+                  "  -v, --verbose                           Prints verbose output\n")
+            exit(0)
+        if sys.argv[i] == "-v" or sys.argv[i] == "--verbose":
+            VERBOSE = True
+
+    print(Fore.GREEN + "##########################################\n"
+          "# flopana's Teamspeak3 Server Updater    #\n"
+          "##########################################\n" + Style.RESET_ALL)
+
     main()
