@@ -83,6 +83,7 @@ def main():
 
     print(Fore.GREEN + "\nFinished thank you for using my script!" + Style.RESET_ALL)
 
+
 def create_connection(db_file):
     """ create a database connection to the SQLite database
     specified by db_file
@@ -165,7 +166,7 @@ if __name__ == '__main__':
     init()
     for i in range(len(sys.argv)):
         if sys.argv[i] == "-h" or sys.argv[i] == "--help":
-            print(Fore.CYAN + "A Python 3 script used for updating a Teamspeak3 Server\n" + Style.RESET_ALL +
+            print(Fore.CYAN + "A Python 3 script used for updating a Teamspeak3 Server\n\n" + Style.RESET_ALL +
                   "usage: python3 main.py -h | -v\n"
                   "Options:\n"
                   "  -h, --help                              Displays this message\n"
@@ -174,8 +175,10 @@ if __name__ == '__main__':
         if sys.argv[i] == "-v" or sys.argv[i] == "--verbose":
             VERBOSE = True
 
-    print(Fore.GREEN + "##########################################\n"
-          "# flopana's Teamspeak3 Server Updater    #\n"
-          "##########################################\n" + Style.RESET_ALL)
+    print(Fore.GREEN + "########################################################\n"
+                       "# flopana's Teamspeak3 Server Updater                  #\n"
+                       "# for more information and suggestions go on           #\n"
+                       "# https://github.com/flopana/Teamspeak3-Server-Updater #\n"
+                       "########################################################\n" + Style.RESET_ALL)
 
     main()
