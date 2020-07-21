@@ -5,6 +5,9 @@ from bs4 import BeautifulSoup
 from version_shit import sort, vcmp
 import tarfile
 import os
+import sys
+
+VERBOSE = False
 
 
 def main():
@@ -12,16 +15,18 @@ def main():
     Main function of the script
     :return:
     """
-    print("Creating connection to sqlite")
+    if VERBOSE:
+        print("Creating connection to sqlite")
     conn = create_connection(r"db.sqlite3")
 
     currentdb_ver = get_last_version(conn)
-    if get_last_version(conn) is None:
-        print("Nothing found in the db so getting the newest version")
-    else:
-        print("Latest inserted version in db is: " + currentdb_ver)
-
-    print("\nGetting all available versions from teamspeak.com")
+    if VERBOSE:
+        if get_last_version(conn) is None:
+            print("Nothing found in the db so getting the newest version")
+        else:
+            print("Latest inserted version in db is: " + currentdb_ver)
+    if VERBOSE:
+        print("\nGetting all available versions from teamspeak.com")
     URL = 'https://files.teamspeak-services.com/releases/server/'
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, 'html.parser')
