@@ -174,7 +174,7 @@ def insert_new_version(conn, oldver, newver):
             print("No old_version was found in the database so inserting: " + Fore.CYAN + " NULL " + Style.RESET_ALL)
         sql = '''INSERT INTO versions(old_version,new_version)VALUES(NULL,'{}')'''.format(newver)
     if VERBOSE:
-        print("SQL Query: " + Fore.YELLOW + " " + sql + Style.RESET_ALL)
+        print("SQL Query: " + Fore.YELLOW + sql + Style.RESET_ALL)
         print("\nFinished inserting")
     cur = conn.cursor()
     cur.execute(sql)
