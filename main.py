@@ -32,7 +32,7 @@ def main():
             ARCHITECTURE = "x86"
 
         if VERBOSE:
-            print("Architecture detected: " + ARCHITECTURE)
+            print("Architecture detected: " + ARCHITECTURE + "\n")
     elif ARCHITECTURE != "amd64" and ARCHITECTURE != "x86":
         print(Fore.RED + "Error:\n"
                          "" + Style.RESET_ALL + "Unsupported architecture please look up the usage.")
