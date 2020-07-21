@@ -25,8 +25,8 @@ def main():
         if VERBOSE:
             print("Detecting architecture:")
 
-        tmp = os.popen('uname -m').read()
-        if tmp is "x86_64":
+        tmp = str(os.popen('uname -m').read())
+        if tmp == "x86_64":
             ARCHITECTURE = "amd64"
         else:
             ARCHITECTURE = "x86"
