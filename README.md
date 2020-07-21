@@ -5,7 +5,15 @@ This python script is used to update your Teamspeak3 Server though it's not a di
 The python script also uses a local sqlite database for tracking the updates to avoid updating the server if not necessary.
 
 ## Installation
-This script requires Python3 and pip to be installed
+This script requires Python3 and pip to be installed.
+
+Also this scripts folder should reside beside the teamspeak server folder for example:
+```
+└── usr
+   └── local
+      ├── teamspeak3-server-updater
+      └── teamspeak3-server_linux_amd64
+```
 ```shell script
 $ git clone https://github.com/flopana/teamspeak3-server-updater.git
 $ cd teamspeak3-server-updater
@@ -18,7 +26,7 @@ $ python3 main.py
 ```
 
 There are also options available
-```shell script
+```
 usage: python3 main.py -h | -v | -f
 Options:
   -h, --help                              Displays this message
