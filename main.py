@@ -30,8 +30,8 @@ def main():
             print(Style.RESET_ALL)
     if VERBOSE:
         print("Getting all available versions from teamspeak.com")
-    URL = 'https://files.teamspeak-services.com/releases/server/'
-    page = requests.get(URL)
+    url = 'https://files.teamspeak-services.com/releases/server/'
+    page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     versions = []
     for a in soup.find_all('a', href=True):
