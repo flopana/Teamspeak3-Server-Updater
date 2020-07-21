@@ -27,4 +27,10 @@ def sort(l):
 
 
 def vcmp(version1, version2):
+    """
+    Compares the two versions and returns true if version1 is smaller than version2
+    :param version1:
+    :param version2:
+    :return boolean:
+    """
     return LooseVersion(version1) < LooseVersion(version2)
