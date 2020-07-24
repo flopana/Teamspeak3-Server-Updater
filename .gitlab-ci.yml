@@ -18,7 +18,7 @@ documentation:
     - pip install -r requirements.txt
     - git clone git@github.com:flopana/teamspeak3-server-updater.github.io.git
     - pdoc --html ../teamspeak3-server-updater
-    - mv html/teamspeak3-server-updater teamspeak3-server-updater.github.io/
+    - mv html/teamspeak3-server-updater/* teamspeak3-server-updater.github.io/
     - cd teamspeak3-server-updater.github.io
     - git add .
     - git commit -m "docs"
