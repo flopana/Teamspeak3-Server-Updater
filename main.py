@@ -23,7 +23,10 @@ def main():
     global ARCHITECTURE, FORCE, VERBOSE, UPDATE
 
     if UPDATE:
-        os.system("git pull")
+        if VERBOSE:
+            print("Script now tries to update itself.\n")
+            os.system("git pull")
+        os.system("git pull >> /dev/null")
 
     if ARCHITECTURE is None:
         if VERBOSE:
