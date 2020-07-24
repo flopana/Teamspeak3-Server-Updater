@@ -26,6 +26,7 @@ def main():
         if VERBOSE:
             print("Script now tries to update itself.\n")
             os.system("git pull")
+            print("")
         os.system("git pull >> /dev/null")
 
     if ARCHITECTURE is None:
