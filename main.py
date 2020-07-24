@@ -31,7 +31,7 @@ def main():
 
     if ARCHITECTURE is None:
         if VERBOSE:
-            print("Detecting architecture:")
+            print(Fore.CYAN + "Detecting architecture:" + Style.RESET_ALL)
 
         result = os.popen('uname -m').read()
         if result == "x86_64\n":
