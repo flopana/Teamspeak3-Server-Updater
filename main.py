@@ -194,7 +194,7 @@ if __name__ == '__main__':
                   "Options:\n"
                   "  -h, --help                              Displays this message\n"
                   "  -v, --verbose                           Prints verbose output\n"
-                  "  -f, --force                             Forces an update\n"
+                  "  -f, --force                             Forces an update of the teamspeak server\n"
                   "  -u, --update                            The script updates itself\n"
                   "  -a, --architecture                      Lets you define the architecure (amd64 or x86)")
             exit(0)
