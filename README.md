@@ -27,11 +27,12 @@ $ python3 main.py
 
 There are also options available
 ```
-usage: python3 main.py [-h] [-v] [-f] [-a ARCHITECTURE]
+usage: python3 main.py [-h] [-v] [-f] [-u] [-a ARCHITECTURE]
 Options:
   -h, --help                              Displays this message
   -v, --verbose                           Prints verbose output
-  -f, --force                             Forces an update
+  -f, --force                             Forces an update of the teamspeak server
+  -u, --update                            The script updates itself
   -a, --architecture                      Lets you define the architecure (amd64 or x86)
 ```
 
@@ -41,5 +42,5 @@ Since the script also checks wether or not it should update you can automate it.
 Example cronjob:
 ```
 # Executes every Monday on 3AM
-0 3 * * 1 cd /path/to/script && python3 main.py >/dev/null 2>&1
+0 3 * * 1 cd /path/to/script && python3 main.py -u >/dev/null 2>&1
 ```
