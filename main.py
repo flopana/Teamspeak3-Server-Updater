@@ -196,7 +196,7 @@ if __name__ == '__main__':
                   "  -v, --verbose                           Prints verbose output\n"
                   "  -f, --force                             Forces an update\n"
                   "  -u, --update                            The script updates itself\n"
-                  "  -a, --architecture                      Lets you define the architecure")
+                  "  -a, --architecture                      Lets you define the architecure (amd64 or x86)")
             exit(0)
         if sys.argv[i] == "-v" or sys.argv[i] == "--verbose":
             VERBOSE = True

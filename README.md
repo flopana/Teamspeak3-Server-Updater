@@ -27,11 +27,12 @@ $ python3 main.py
 
 There are also options available
 ```
-usage: python3 main.py [-h] [-v] [-f] [-a ARCHITECTURE]
+usage: python3 main.py [-h] [-v] [-f] [-u] [-a ARCHITECTURE]
 Options:
   -h, --help                              Displays this message
   -v, --verbose                           Prints verbose output
   -f, --force                             Forces an update
+  -u, --update                            The script updates itself
   -a, --architecture                      Lets you define the architecure (amd64 or x86)
 ```
 
