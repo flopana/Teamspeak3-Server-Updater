@@ -4,6 +4,8 @@ stages:
 before_script:
   - mkdir ~/.ssh
   - echo $GITHUB_DEPLOY_KEY_PAGES >> ~/.ssh/id_rsa
+  - git config --global user.email "pasta@pizza.italia"
+  - git config --global user.name "Gitlab CI Pipeline"
 
 documentation:
   stage: docs
