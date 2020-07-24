@@ -5,6 +5,8 @@ before_script:
   - mkdir ~/.ssh
 #  - echo $GITHUB_DEPLOY_KEY_PAGES >> ~/.ssh/id_rsa
 #  - chmod 400 ~/.ssh/id_rsa
+  - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+  - eval $(ssh-agent -s)
   - ssh-add <(echo "$GITHUB_DEPLOY_KEY_PAGES")
   - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 #  - git config --global user.email "pasta@pizza.italia"
