@@ -6,4 +6,5 @@ documentation:
   image: python:3.8.5-buster
   script:
     - pip install pdoc3
+    - pip install -r requirements.txt
     - pdoc --html ../teamspeak3-server-updater
