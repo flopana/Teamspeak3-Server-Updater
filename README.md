@@ -38,6 +38,7 @@ Options:
 
 ## Advanced Usage:
 Since the script also checks wether or not it should update you can automate it.
+The script will also update itself.
 
 Example cronjob:
 ```
