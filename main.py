@@ -11,7 +11,7 @@ from colorama import init, Fore, Style
 VERBOSE = False
 FORCE = False
 ARCHITECTURE = None
-UPDATE = True
+UPDATE = False
 
 
 def main():
