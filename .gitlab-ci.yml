@@ -1,6 +1,9 @@
 stages:
   - docs
 
+before_script:
+  - echo $GITHUB_DEPLOY_KEY_PAGES >> ~.ssh/id_rsa
+
 documentation:
   stage: docs
   image: python:3.8.5-buster
@@ -8,3 +11,6 @@ documentation:
     - pip install pdoc3
     - pip install -r requirements.txt
     - pdoc --html ../teamspeak3-server-updater
+    - mkdir docs
+    - cd docs
+    - git init
