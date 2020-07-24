@@ -20,7 +20,8 @@ documentation:
     - pdoc --html ../teamspeak3-server-updater
     - mv html/teamspeak3-server-updater/* teamspeak3-server-updater.github.io/
     - cd teamspeak3-server-updater.github.io
-    - rm -r teamspeak3-server-updater
     - git add .
     - git commit -m "docs"
     - git push
+  only:
+    - master
