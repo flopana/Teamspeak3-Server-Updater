@@ -23,6 +23,7 @@ def main():
 
     global ARCHITECTURE, FORCE, VERBOSE, UPDATE
 
+    """ Checks if update is on and updates """
     if UPDATE:
         if VERBOSE:
             print("Script now tries to update itself.\n")
@@ -170,7 +171,7 @@ def get_last_version(conn):
 def insert_new_version(conn, oldver, newver):
     """
     Create a new row in versions
-    
+
     :param conn:
     :param oldver:
     :param newver:
