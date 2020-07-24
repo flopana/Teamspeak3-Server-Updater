@@ -4,6 +4,9 @@
 This python script is used to update your Teamspeak3 Server though it's not a difficult task having a script is convenient.
 The python script also uses a local sqlite database for tracking the updates to avoid updating the server if not necessary.
 
+## Documentation
+https://flopana.github.io/teamspeak3-server-updater-docs/
+
 ## Installation
 This script requires Python3 and pip to be installed.
 
