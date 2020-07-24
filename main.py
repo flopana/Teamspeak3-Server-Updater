@@ -11,6 +11,7 @@ from colorama import init, Fore, Style
 VERBOSE = False
 FORCE = False
 ARCHITECTURE = None
+UPDATE = True
 
 
 def main():
@@ -19,7 +20,10 @@ def main():
     :return:
     """
 
-    global ARCHITECTURE, FORCE, VERBOSE
+    global ARCHITECTURE, FORCE, VERBOSE, UPDATE
+
+    if UPDATE:
+        os.system("git pull")
 
     if ARCHITECTURE is None:
         if VERBOSE:
@@ -186,12 +190,12 @@ if __name__ == '__main__':
     for i in range(len(sys.argv)):
         if sys.argv[i] == "-h" or sys.argv[i] == "--help":
             print(Fore.CYAN + "A Python 3 script used for updating a Teamspeak3 Server\n\n" + Style.RESET_ALL +
-                  "usage: python3 main.py -h | -v | -f\n"
-                  "usage: python3 main.py -a [amd64 or x86]\n"
+                  "usage: python3 main.py [-h] [-v] [-f] [-u] [-a ARCHITECTURE]\n"
                   "Options:\n"
                   "  -h, --help                              Displays this message\n"
                   "  -v, --verbose                           Prints verbose output\n"
                   "  -f, --force                             Forces an update\n"
+                  "  -u, --update                            The script updates itself\n"
                   "  -a, --architecture                      Lets you define the architecure")
             exit(0)
         if sys.argv[i] == "-v" or sys.argv[i] == "--verbose":
@@ -207,6 +211,8 @@ if __name__ == '__main__':
                 print(Fore.RED + "Error:\n"
                                  "" + Style.RESET_ALL + "Unsupported architecture please look up the usage.")
                 exit(1)
+        if sys.argv[i] == "-u" or sys.argv[i] == "--update":
+            UPDATE = True
 
     print(Fore.GREEN + "########################################################\n"
                        "# flopana's Teamspeak3 Server Updater                  #\n"
