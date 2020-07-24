@@ -11,7 +11,9 @@ documentation:
   script:
     - pip install pdoc3
     - pip install -r requirements.txt
+    - git clone https://github.com/flopana/teamspeak3-server-updater.github.io
     - pdoc --html ../teamspeak3-server-updater
-    - mkdir docs
-    - cd docs
-    - git init
+    - mv html/teamspeak3-server-updater teamspeak3-server-updater.github.io/
+    - cd teamspeak3-server-updater.github.io
+    - git add .
+    - git commit -m "docs"
