@@ -1,3 +1,15 @@
+"""Main file of the script does most of the work like webscraping and actually updating
+
+usage: python3 main.py [-h] [-v] [-f] [-u] [-a ARCHITECTURE]
+Options:
+  -h, --help                              Displays this message
+  -v, --verbose                           Prints verbose output
+  -f, --force                             Forces an update of the teamspeak server
+  -u, --update                            The script updates itself
+  -a, --architecture                      Lets you define the architecure (amd64 or x86)
+
+"""
+
 import sqlite3
 from sqlite3 import Error
 import requests
@@ -15,10 +27,8 @@ UPDATE = False
 
 
 def main():
-    """
-    Main function of the script
+    """Main function of the script
 
-    :return:
     """
 
     global ARCHITECTURE, FORCE, VERBOSE, UPDATE
@@ -86,12 +96,12 @@ def main():
 
     print("\nUpdating Teamspeak")
 
-    URL_TAR = url + latest_ver + "/teamspeak3-server_linux_" + ARCHITECTURE + "-" + latest_ver + ".tar.bz2"
+    url_tar = url + latest_ver + "/teamspeak3-server_linux_" + ARCHITECTURE + "-" + latest_ver + ".tar.bz2"
 
     if VERBOSE:
-        print("\nDownloading current version: " + URL_TAR)
+        print("\nDownloading current version: " + url_tar)
 
-    r = requests.get(URL_TAR)
+    r = requests.get(url_tar)
     with open('../ts3.tar.bz2', 'wb') as f:
         f.write(r.content)
 
@@ -118,6 +128,13 @@ def create_connection(db_file):
 
     :param db_file: database file
     :return: Connection object or None
+
+    Args:
+        db_file:
+            sqlite file to create connection to
+
+    Returns:
+        A connection to interact with the sqlite db
     """
     try:
         conn = sqlite3.connect(db_file)
@@ -141,9 +158,11 @@ def create_connection(db_file):
 def create_table(conn, create_table_sql):
     """ create a table from the create_table_sql statement
 
-    :param conn: Connection object
-    :param create_table_sql: a CREATE TABLE statement
-    :return:
+    Args:
+        conn:
+            connection to sqlite db
+        create_table_sql:
+            sql query to execute
     """
     try:
         c = conn.cursor()
@@ -156,8 +175,12 @@ def get_last_version(conn):
     """
     Query last insereted new_version from versions table
 
-    :param conn: the Connection object
-    :return version: last inserted new version
+    Args:
+        conn:
+            connection to sqlite db
+
+    Returns:
+        Last inserted version from the versions table
     """
     cur = conn.cursor()
     cur.execute("SELECT new_version FROM versions order by id DESC")
@@ -172,10 +195,14 @@ def insert_new_version(conn, oldver, newver):
     """
     Create a new row in versions
 
-    :param conn:
-    :param oldver:
-    :param newver:
-    :return:
+    Args:
+        conn:
+            connection to sqlite db
+        oldver:
+            Old version e.g 2.1.7
+        newver:
+            New version e.g 2.1.8 or 2.2
+
     """
 
     if VERBOSE:
