@@ -86,12 +86,12 @@ def main():
 
     print("\nUpdating Teamspeak")
 
-    URL_TAR = url + latest_ver + "/teamspeak3-server_linux_" + ARCHITECTURE + "-" + latest_ver + ".tar.bz2"
+    url_tar = url + latest_ver + "/teamspeak3-server_linux_" + ARCHITECTURE + "-" + latest_ver + ".tar.bz2"
 
     if VERBOSE:
-        print("\nDownloading current version: " + URL_TAR)
+        print("\nDownloading current version: " + url_tar)
 
-    r = requests.get(URL_TAR)
+    r = requests.get(url_tar)
     with open('../ts3.tar.bz2', 'wb') as f:
         f.write(r.content)
 
