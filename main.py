@@ -122,9 +122,6 @@ def main():
 def create_connection(db_file):
     """ create a database connection to the SQLite database specified by db_file
 
-    :param db_file: database file
-    :return: Connection object or None
-
     Args:
         db_file: sqlite file to create connection to
 

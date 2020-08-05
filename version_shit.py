@@ -1,9 +1,8 @@
-import re
-from distutils.version import LooseVersion
-
 """
 Sorts the versions in a human way so that for example 1.15 is newer than 1.2
 """
+import re
+from distutils.version import LooseVersion
 
 
 def tryint(s):
