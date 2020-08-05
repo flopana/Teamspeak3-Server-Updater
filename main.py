@@ -1,12 +1,8 @@
 """Main file of the script does most of the work like webscraping and actually updating
 
-usage: python3 main.py [-h] [-v] [-f] [-u] [-a ARCHITECTURE]
-Options:
-  -h, --help                              Displays this message
-  -v, --verbose                           Prints verbose output
-  -f, --force                             Forces an update of the teamspeak server
-  -u, --update                            The script updates itself
-  -a, --architecture                      Lets you define the architecure (amd64 or x86)
+Examples:
+python3 main.py
+python3 main.py -u
 
 """
 
@@ -130,8 +126,7 @@ def create_connection(db_file):
     :return: Connection object or None
 
     Args:
-        db_file:
-            sqlite file to create connection to
+        db_file: sqlite file to create connection to
 
     Returns:
         A connection to interact with the sqlite db
@@ -159,10 +154,8 @@ def create_table(conn, create_table_sql):
     """ create a table from the create_table_sql statement
 
     Args:
-        conn:
-            connection to sqlite db
-        create_table_sql:
-            sql query to execute
+        conn: connection to sqlite db
+        create_table_sql: sql query to execute
     """
     try:
         c = conn.cursor()
@@ -176,8 +169,7 @@ def get_last_version(conn):
     Query last insereted new_version from versions table
 
     Args:
-        conn:
-            connection to sqlite db
+        conn: connection to sqlite db
 
     Returns:
         Last inserted version from the versions table
@@ -196,12 +188,9 @@ def insert_new_version(conn, oldver, newver):
     Create a new row in versions
 
     Args:
-        conn:
-            connection to sqlite db
-        oldver:
-            Old version e.g 2.1.7
-        newver:
-            New version e.g 2.1.8 or 2.2
+        conn: connection to sqlite db
+        oldver: Old version e.g 2.1.7
+        newver: New version e.g 2.1.8 or 2.2
 
     """
 
