@@ -30,8 +30,14 @@ def vcmp(version1, version2):
     """
     Compares the two versions and returns true if version1 is smaller than version2
 
-    :param version1:
-    :param version2:
-    :return boolean:
+    Args:
+        version1:
+            First version to compare e.g 2.1.7
+        version2:
+            Second version to compare e.g 2.1.8 or 2.2
+
+    Returns:
+        A boolean whether or not version1 is smaller then version two
+
     """
     return LooseVersion(version1) < LooseVersion(version2)
